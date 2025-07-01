@@ -1,26 +1,34 @@
 package com.basic.exercise.domain.concert.main;
 
+import com.basic.exercise.domain.concert.member.Member;
+import com.basic.exercise.domain.concert.service.BookService;
+import com.basic.exercise.domain.concert.service.MemberService;
+import com.basic.exercise.domain.concert.service.ShowService;
+
+import java.util.Scanner;
+
 public class ConcertMain {
-
+    
     public static void main(String[] args) {
-        // todo : 콘서트예약 만들기
+        Scanner sc = new Scanner(System.in);
+        MemberService memberService = new MemberService();
+        BookService bookService = new BookService();
+        ShowService showService = new ShowService();
 
-        // todo : 콘서트?
-        /*
-        접속자(예매자)
-        예약 사이트 -> 서비스 객체
-        관리자 -> 나중에
+        // 예매자 입장
+        memberService.join("memberA","1234");
+        Member memberA = memberService.login("memberA", "1234");
 
-        로직 ? ->
-        0. 접속
-        1. 로그인
-        2. 예매 신청
-        3. 날짜 선택(장소)  -> 공연 정보 객체 -> 날짜, 좌석 정보 들고있어야함
-        4. 좌석 선택 ->
-        5. 결제하기 -> 결제 객체 -> 결제하기, 취소하기
-        6. 예약 확정 -> 예약 객체 -> 예약하기, 취소하기
-        7. 예약 확인
-        8. 결제취소(예약 취소) -> 패널티
-         */
+        // 공연 목록 제공
+        showService.showList();
+        System.out.print("원하시는 공연을 골라주세요 : ");
+        int choiceShowNumber = sc.nextInt();
+
+        // 예매 요청
+        bookService.bookingShow(choiceShowNumber, memberA);
+        int showId = bookService.getBookingInfo(memberA.getMemberId());
+        bookService.cancelBooking(memberA.getMemberId(), showId);
+
+        bookService.getBookingInfo(memberA.getMemberId());
     }
 }
