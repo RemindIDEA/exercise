@@ -6,6 +6,7 @@ import com.basic.exercise.domain.concert.service.MemberService;
 import com.basic.exercise.domain.concert.service.ShowService;
 
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConcertMain {
     
@@ -26,9 +27,14 @@ public class ConcertMain {
 
         // 예매 요청
         bookService.bookingShow(choiceShowNumber, memberA);
-        int showId = bookService.getBookingInfo(memberA.getMemberId());
-        bookService.cancelBooking(memberA.getMemberId(), showId);
+        Set<Integer> showIds = bookService.getBookingInfo(memberA.getMemberId());
+        showIds.forEach(showService::getShowInfo);
 
-        bookService.getBookingInfo(memberA.getMemberId());
+        System.out.println("취소하고 싶은 공연을 골라주세요");
+        choiceShowNumber = sc.nextInt();
+        bookService.cancelBooking(memberA.getMemberId(), choiceShowNumber);
+
+        bookService.getBookingInfo(memberA.getMemberId())
+                .forEach(showService::getShowInfo);;
     }
 }

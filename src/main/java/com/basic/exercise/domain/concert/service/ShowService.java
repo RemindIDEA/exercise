@@ -18,4 +18,8 @@ public class ShowService {
     public void showList() {
         showInformationList.forEach(ShowInformation::displayShowInfo);
     }
+
+    public void getShowInfo(int showId){
+        showInformationList.get(showId).displayShowInfo();
+    }
 }
